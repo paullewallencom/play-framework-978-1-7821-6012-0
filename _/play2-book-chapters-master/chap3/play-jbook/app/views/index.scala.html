@@ -1,0 +1,18 @@
+@(message: String)(chats:List[Chat])
+
+@import models.Item
+@import java.util.List
+
+@main("Welcome the Packt Plublishing's Play 2.0 Demo") {
+    <h1>@message</h1>
+    @chats.sortBy(_.occurrence).groupBy(_.date.toDate).toSeq.sortBy(_._1).map { dateAndChats =>
+        <h3>-- Chat @dateAndChats._1 --</h3>
+        @dateAndChats._2.map { chat =>
+            @listContainer{
+                <h3>-- Chat #@chat.occurrence --</h3>
+            }(chat) {
+                <hr/>
+            }
+        }
+    }
+}
